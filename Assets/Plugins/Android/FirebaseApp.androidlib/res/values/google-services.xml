@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://find-the-impostor-default-rtdb.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">673766012694</string>
+  <string name="google_storage_bucket" translatable="false">find-the-impostor.appspot.com</string>
+  <string name="project_id" translatable="false">find-the-impostor</string>
+  <string name="google_api_key" translatable="false">AIzaSyAFJGXdN3NSZ6eZuwkwpe0mBCyAG_tjE_s</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAFJGXdN3NSZ6eZuwkwpe0mBCyAG_tjE_s</string>
+  <string name="google_app_id" translatable="false">1:673766012694:android:eef9b343363627887e4237</string>
+  <string name="default_web_client_id" translatable="false">673766012694-vcifd5lep620tkj9cdb5bcje9tbgucrh.apps.googleusercontent.com</string>
+</resources>

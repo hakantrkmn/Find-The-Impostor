@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "673766012694",
+    "firebase_url": "https://find-the-impostor-default-rtdb.firebaseio.com",
+    "project_id": "find-the-impostor",
+    "storage_bucket": "find-the-impostor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673766012694:android:eef9b343363627887e4237",
+        "android_client_info": {
+          "package_name": "com.agalarlagames.findtheimpostor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673766012694-vcifd5lep620tkj9cdb5bcje9tbgucrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFJGXdN3NSZ6eZuwkwpe0mBCyAG_tjE_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673766012694-vcifd5lep620tkj9cdb5bcje9tbgucrh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
