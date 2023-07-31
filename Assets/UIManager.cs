@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,10 +16,15 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI levelText;
     public GameObject infoPanel;
 
+    public GameObject leaderBoardPanel;
+
+    public GameObject levelWinPanel;
+    public GameObject levelLosePanel;
+
     private void Start()
     {
         levelText.text = "level "+ES3.Load("level").ToString();
-        if (ES3.KeyExists("nick"))
+        if (ES3.KeyExists("user"))
         {
             LoadNickname();
         }
@@ -28,18 +35,67 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        EventManager.LevelSuccess += LevelSuccess;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.LevelSuccess -= LevelSuccess;
+    }
+
+    private void LevelSuccess(bool obj)
+    {
+        levelWinPanel.SetActive(obj);
+        levelLosePanel.SetActive(!obj);
+    }
+
+    [Button]
+    public void NextLevel()
+    {
+        var user = (ES3.Load("user") as User);
+        user.level++;
+        ES3.Save("user",user);
+        ES3.Save("level",user.level);
+        EventManager.UpdateUser(user);
+        SceneManager.LoadScene(1);
+    }
+    
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void SetNick()
     {
         var nick = nickInput.text;
-        ES3.Save("nick",nick);
-        LoadNickname();
+        EventManager.CreateUser(nick);
+        LoadNickname(nick);
     }
 
+    public void OpenLeaderBoard()
+    {
+        if (leaderBoardPanel.activeSelf)
+        {
+            leaderBoardPanel.SetActive(false);
+        }
+        else
+        {
+            leaderBoardPanel.SetActive(true);
 
+        }
+    }
+    public void LoadNickname(string nick)
+    {
+        nickPanel.SetActive(false);
+        nickText.text = nick;
+        infoPanel.SetActive(true);
+    }
     public void LoadNickname()
     {
         nickPanel.SetActive(false);
-        nickText.text = ES3.Load("nick").ToString();
+        nickText.text = (ES3.Load("user") as User).nickName;
         infoPanel.SetActive(true);
     }
 }

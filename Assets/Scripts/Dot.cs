@@ -11,6 +11,6 @@ public class Dot : MonoBehaviour, IPointerClickHandler
     
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        Debug.Log(isDifferent);
+        EventManager.LevelSuccess(isDifferent);
     }
 }

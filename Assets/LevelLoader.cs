@@ -7,9 +7,10 @@ public class LevelLoader : MonoBehaviour
 {
     void Start()
     {
-        if (ES3.KeyExists("level"))
+        if (ES3.KeyExists("user"))
         {
-            SceneManager.LoadScene((int)ES3.Load("level"));
+            ES3.Save("level",(ES3.Load("user")as User).level);
+            SceneManager.LoadScene(1);
         }
         else
         {

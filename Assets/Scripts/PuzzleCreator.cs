@@ -18,79 +18,21 @@ public class PuzzleCreator : MonoBehaviour
     public Dot dotPrefab;
     public List<Dot> dots;
 
-    private DatabaseReference reference;
     public int levelIndex;
 
     private void Start()
     {
         CreatePuzzleCanvas();
         SetPuzzleColors();
-         reference = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
-    [Button]
-    public async void GetUsers()
-    {
-        var test = await GetLastId();
-        Debug.Log(test);
-        FirebaseDatabase dbInstance = FirebaseDatabase.DefaultInstance;
-        dbInstance.GetReference("users").GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsFaulted)
-            {
-                Debug.Log("hata");
-            }
-            else if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                
-
-                foreach (DataSnapshot user in snapshot.Children)
-                {
-                    User userA = JsonUtility.FromJson<User>(user.GetRawJsonValue());
-                    Debug.Log("" + userA.level + " - " + userA.nickName);
-                }
-                
-            }
-        });
-    }
-    public async Task<int> GetLastId()
-    {
-        int result = -1;
-        FirebaseDatabase dbInstance = FirebaseDatabase.DefaultInstance;
-        result = await dbInstance.GetReference("users").OrderByKey().LimitToLast(1).GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsFaulted)
-            {
-                Debug.Log("hata");
-                return -1;
-            }
-            else if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-
-                
-                Debug.Log(snapshot.Children.Count());
-                
-                var user = JsonUtility.FromJson<User>(snapshot.Children.Last().GetRawJsonValue());
-                
-                result = user.userId;
-                Debug.Log(result);
-                return result;
-
-            }
-
-            return 2;
-        });
-        
-
-            return result;
-    }
+   
+   
     
     [Button]
     public void CreatePuzzleCanvas()
     {
-        //levelIndex = (int)ES3.Load("level") + 1;
+        levelIndex = (int)ES3.Load("level") ;
         foreach (var dot in dots)
         {
             DestroyImmediate(dot.gameObject);
@@ -103,11 +45,23 @@ public class PuzzleCreator : MonoBehaviour
             constraint = 2;
         }
 
+        var minWidth = ((rectTransform.rect.width - 50) / constraint) - 50;
+        var minHeight = ((rectTransform.rect.height-50) / (levelIndex/constraint)) - 50;
         gridLayoutGroup.constraintCount = constraint;
-        var cellSize = new Vector2((rectTransform.rect.width / constraint) - 50,
-            (rectTransform.rect.width / constraint) - 50);
+        if (minWidth< minHeight)
+        {
+            
+            var cellSize = new Vector2(minWidth, minWidth);
 
-        gridLayoutGroup.cellSize = cellSize;
+            gridLayoutGroup.cellSize = cellSize;
+        }
+        else
+        {
+            var cellSize = new Vector2(minHeight, minHeight);
+
+            gridLayoutGroup.cellSize = cellSize;
+        }
+       
 
         for (int i = 0; i < levelIndex; i++)
         {
@@ -116,24 +70,7 @@ public class PuzzleCreator : MonoBehaviour
         }
     }
 
-    [Button]
-    private async void writeNewUser(string userId, string name, int level) {
-        User user = new User(name, level);
-        var lastUserID = await GetLastId();
-        if (lastUserID==-1)
-        {
-            lastUserID = 0;
-        }
-        else
-        {
-            lastUserID++;
-        }
-
-        user.userId = lastUserID;
-        string json = JsonUtility.ToJson(user);
-
-        reference.Child("users").Child(lastUserID.ToString()).SetRawJsonValueAsync(json);
-    }
+    
     [Button]
     public void SetPuzzleColors()
     {
@@ -160,15 +97,4 @@ public class PuzzleCreator : MonoBehaviour
     }
 }
 
-public class User
-{
-    public int userId;
-    public string nickName;
-    public int level;
 
-    public User(string nickName, int level)
-    {
-        this.nickName = nickName;
-        this.level = level;
-    }
-}
