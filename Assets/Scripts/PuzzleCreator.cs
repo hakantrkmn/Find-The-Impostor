@@ -17,6 +17,7 @@ public class PuzzleCreator : MonoBehaviour
     public RectTransform rectTransform;
     public Dot dotPrefab;
     public List<Dot> dots;
+    public List<Color> puzzleColors;
 
     public int levelIndex;
 
@@ -74,7 +75,7 @@ public class PuzzleCreator : MonoBehaviour
     [Button]
     public void SetPuzzleColors()
     {
-        var color = Random.ColorHSV();
+        var color = puzzleColors[Random.Range(0, puzzleColors.Count)];
 
         var randDot = dots[Random.Range(0, dots.Count)];
 

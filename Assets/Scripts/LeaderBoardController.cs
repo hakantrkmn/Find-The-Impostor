@@ -16,7 +16,7 @@ public class LeaderBoardController : MonoBehaviour
     public List<ScoreLine> scoreLines;
     private void Start()
     {
-        var cellSize = new Vector2(rectTransform.rect.width, rectTransform.rect.height / 4);
+        var cellSize = new Vector2(rectTransform.rect.width-20, rectTransform.rect.height / 6);
         gridLayoutGroup.cellSize = cellSize;
         GetUsers();
     }
